@@ -1,0 +1,55 @@
+plugins {
+    id "com.android.application" version '7.3.1' apply false
+    id "com.android.library" version '7.3.1' apply false
+    id "org.jetbrains.kotlin.android" version "1.7.10" apply false
+    id "org.jetbrains.kotlin.jvm" version "1.7.10" apply false
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+
+    compileSdkVersion = 33
+    minSdkVersion = 24
+    targetSdkVersion = 33
+    buildToolsVersion = "31.0.0"
+
+    // Modules
+    project(":presentation:logic")
+    project(":presentation:ui")
+    project(":domain")
+    project(":data")
+
+    // Core
+    app_compat_version = "1.5.1"
+
+    // Coroutines
+    coroutines_version = "1.6.4"
+
+    // DI
+    koin_version = "3.3.0"
+
+    // UI
+    activity_ktx_version = "1.6.1"
+    core_ktx_version = "1.9.0"
+    fragment_ktx_version = "1.5.4"
+    lifecycle_version = "2.5.1"
+    material_version = "1.7.0"
+    recycler_view_version = "1.2.1"
+    view_binding_property_delegate_version = "1.5.6"
+
+    // Image loading
+    coil_version = "1.4.0"
+
+    // Logging
+    timber_version = "5.0.1"
+
+    // Navigation
+    cicerone_version = "6.6"
+
+    // Network
+    retrofit_version = "2.9.0"
+    gson_version = '2.10'
+}

@@ -1,0 +1,46 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    compileSdk rootProject.compileSdkVersion
+
+    defaultConfig {
+        minSdk rootProject.minSdkVersion
+        targetSdk rootProject.targetSdkVersion
+    }
+
+    namespace 'com.itexus.presentation.logic'
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+}
+
+dependencies {
+    implementation project(":presentation:ui")
+    implementation project(":domain")
+
+    implementation "androidx.appcompat:appcompat:$app_compat_version"
+    implementation "androidx.core:core-ktx:$core_ktx_version"
+    implementation "androidx.fragment:fragment-ktx:$fragment_ktx_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "com.jakewharton.timber:timber:$timber_version"
+    implementation "com.github.kirich1409:viewbindingpropertydelegate-noreflection:$view_binding_property_delegate_version"
+    implementation "com.github.terrakok:cicerone:$cicerone_version"
+    implementation "io.insert-koin:koin-android:$koin_version"
+    implementation project(path: ':data')
+    implementation project(path: ':presentation:ui')
+    implementation project(path: ':presentation:ui')
+}
