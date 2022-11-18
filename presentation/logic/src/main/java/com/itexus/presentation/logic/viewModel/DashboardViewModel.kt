@@ -8,7 +8,7 @@ import com.itexus.assignment.presentation.ui.screen.dashboard.DashboardViewModel
 import com.itexus.assignment.presentation.ui.uiState.ProfileItemUiState
 import com.itexus.presentation.logic.navigation.Screens.buildProfileScreen
 import com.itexus.presentation.logic.uiStateMapper.toItemUiState
-import com.itexus.presentation.logic.uiStateMapper.toUiState
+import com.itexus.presentation.logic.viewModel.profile.ProfileArg
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -44,6 +44,13 @@ class DashboardViewModel(
 
     override fun onItemClicked(item: ProfileItemUiState) {
         val clickedProfile = profiles?.find { it.user.userId == item.userId } ?: return
-        router.navigateTo(buildProfileScreen(clickedProfile.toUiState()))
+        router.navigateTo(
+            buildProfileScreen(
+                ProfileArg(
+                    userId = clickedProfile.user.userId,
+                    profileImageUrl = clickedProfile.user.url
+                )
+            )
+        )
     }
 }

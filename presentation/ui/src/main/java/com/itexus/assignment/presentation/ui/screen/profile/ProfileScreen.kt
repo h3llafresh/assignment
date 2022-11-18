@@ -13,6 +13,7 @@ import com.itexus.assignment.presentation.ui.R
 import com.itexus.assignment.presentation.ui.databinding.ScreenProfileBinding
 import com.itexus.assignment.presentation.ui.list.post.PostAdapter
 import com.itexus.assignment.presentation.ui.util.VerticalSpaceItemDecoration
+import com.itexus.assignment.presentation.ui.util.lifecycleAware
 import com.itexus.assignment.presentation.ui.util.showSnackbar
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -22,7 +23,7 @@ class ProfileScreen : Fragment(R.layout.screen_profile) {
 
     private val binding by viewBinding(ScreenProfileBinding::bind)
     private val viewModel: ProfileViewModelApi by viewModel { parametersOf(arguments) }
-    private val postAdapter by lazy { PostAdapter() }
+    private val postAdapter by lifecycleAware { PostAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupPostsList()
@@ -38,10 +39,11 @@ class ProfileScreen : Fragment(R.layout.screen_profile) {
         repeatOnLifecycle(Lifecycle.State.RESUMED) {
             with(viewModel) {
                 launch {
-                    profile.collect {
-                        binding.imageViewProfilePicture.load(it.profileImageUrl)
-                        postAdapter.submitList(it.posts)
-                    }
+                    profileImageUrl.collect (binding.imageViewProfilePicture::load)
+                }
+
+                launch {
+                    posts.collect(postAdapter::submitList)
                 }
 
                 launch {
