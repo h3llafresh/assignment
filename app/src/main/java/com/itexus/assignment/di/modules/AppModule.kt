@@ -6,4 +6,5 @@ internal val appModule: List<Module> = navigationModule +
         networkModule +
         repositoryModule +
         useCaseModule +
-        viewModelModule
+        viewModelModule +
+        interceptorsModule

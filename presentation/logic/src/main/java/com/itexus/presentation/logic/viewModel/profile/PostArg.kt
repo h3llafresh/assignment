@@ -4,8 +4,9 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ProfileArg(
+data class PostArg(
+    val body: String,
+    val id: Int,
+    val title: String,
     val userId: Int,
-    val profileImageUrl: String,
-    val userPosts: List<PostArg>,
 ) : Parcelable

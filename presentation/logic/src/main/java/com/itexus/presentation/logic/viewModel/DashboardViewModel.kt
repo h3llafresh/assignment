@@ -8,6 +8,7 @@ import com.itexus.assignment.presentation.ui.screen.dashboard.DashboardViewModel
 import com.itexus.assignment.presentation.ui.uiState.ProfileItemUiState
 import com.itexus.presentation.logic.navigation.Screens.buildProfileScreen
 import com.itexus.presentation.logic.uiStateMapper.toItemUiState
+import com.itexus.presentation.logic.viewModel.profile.PostArg
 import com.itexus.presentation.logic.viewModel.profile.ProfileArg
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -48,7 +49,15 @@ class DashboardViewModel(
             buildProfileScreen(
                 ProfileArg(
                     userId = clickedProfile.user.userId,
-                    profileImageUrl = clickedProfile.user.url
+                    profileImageUrl = clickedProfile.user.url,
+                    userPosts = clickedProfile.posts.map {
+                        PostArg(
+                            body = it.body,
+                            id = it.id,
+                            title = it.title,
+                            userId = it.userId,
+                        )
+                    }
                 )
             )
         )

@@ -3,8 +3,8 @@ package com.itexus.assignment.di.modules
 import com.google.gson.GsonBuilder
 import com.itexus.assignment.data.remote.jsonServer.JsonServerApi
 import okhttp3.Authenticator
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.qualifier.StringQualifier
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -22,7 +22,7 @@ private inline fun <reified Api> provideApi(retrofit: Retrofit): Api =
     retrofit.create(Api::class.java)
 
 private fun provideOkHttpClient(
-    interceptors: List<Interceptor>? = null,
+    interceptor: HttpLoggingInterceptor,
     tokenAuthenticator: Authenticator? = null,
 ): OkHttpClient {
     return OkHttpClient.Builder()
@@ -31,7 +31,7 @@ private fun provideOkHttpClient(
         .writeTimeout(HTTP_CLIENT_TIMEOUT, TimeUnit.SECONDS)
         .retryOnConnectionFailure(true)
         .apply {
-            interceptors?.forEach(::addInterceptor)
+            addInterceptor(interceptor)
             tokenAuthenticator?.let(::authenticator)
         }.build()
 }
@@ -53,9 +53,10 @@ private fun createGsonFactory() = GsonConverterFactory.create(
 )
 
 internal val retrofitModule = module {
-
     single(ApiQualifier.JsonServer.stringQualifier) {
-        provideRetrofit(client = provideOkHttpClient())
+        provideRetrofit(
+            client = provideOkHttpClient(interceptor = get())
+        )
     }
 }
 

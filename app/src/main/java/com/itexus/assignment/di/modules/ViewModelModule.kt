@@ -38,8 +38,7 @@ internal val viewModelModule = module {
                     @Suppress("DEPRECATION")
                     navArgs?.getParcelable(NAV_ARG_KEY)
                 }
-            ),
-            getUserPostsUseCase = get()
+            )
         )
     }
 }
